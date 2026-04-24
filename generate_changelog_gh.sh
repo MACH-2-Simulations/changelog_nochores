@@ -91,6 +91,9 @@ print_tag() {
 
     # Process each category
     for KEY in $CATEGORIES; do
+        if [ "$KEY" = "chore" ]; then
+        continue
+        fi
         CATEGORY_COMMITS=$(echo "$ALL_COMMITS" | grep -E "^.* $KEY(\(.*\))?: " || true)
         if [ ! -z "$CATEGORY_COMMITS" ]; then
             case $KEY in
@@ -108,6 +111,9 @@ print_tag() {
                 "style") CATEGORY_NAME="Style" ;;
                 "refactor") CATEGORY_NAME="Refactor" ;;
             esac
+
+        
+
             echo "### $CATEGORY_NAME" >> $CHANGELOG_FILE
             echo "Listing commits for category: $CATEGORY_NAME under tag $2"
             echo "$CATEGORY_COMMITS" | while read -r COMMIT; do
